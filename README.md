@@ -10,8 +10,14 @@ This Python module provides a high-level API to communicate and control ST3215 s
 - Write target position, speed, and acceleration
 - Rotate continuously in either direction
 - Define and correct middle position
-- EEPROM locking and ID reconfiguration
+- EEPROM locking, ID and baudrate reconfiguration
 
+## Installation
+You can install the module using pip:
+
+```bash
+pip install -e .
+```
 
 ## Example Usage
 
@@ -269,8 +275,8 @@ servo.Rotate(1, 250)
 ---
 
 ### `MoveTo(sts_id, position, speed=2400, acc=50, wait=False)`
-Move to a defined position.
-Set wait to `True` if you want to wait the end of the move before the function returning
+Move to a defined position. Return `None` in case of error.
+Set wait to `True` if you want to wait the end of the move before the function returning.
 
 - **Parameters**:
   - `sts_id` (int)
@@ -301,7 +307,7 @@ servo.WritePosition(1, 2048)
 ---
 
 ### `ReadPosition(sts_id)`
-Read current position. Return `None` in case of error.
+Read current position. Return position in case of success, otherwise `None`
 
 - **Parameters**: `sts_id` (int)
 - **Returns**: `int` or `None`
@@ -313,7 +319,7 @@ servo.ReadPosition(1)
 ---
 
 ### `ReadSpeed(sts_id)`
-Get current speed. Return `None` in case of error.
+Get current speed. Return speed in case of success, otherwise `None`
 
 - **Parameters**: `sts_id` (int)
 - **Returns**: `(int, int, int)`
@@ -325,7 +331,7 @@ speed, comm, error = servo.ReadSpeed(1)
 ---
 
 ### `LockEprom(sts_id)`
-Lock the EEPROM. Return `None` in case of error.
+Lock the EEPROM. Return `0` in case of success.
 
 - **Parameters**: `sts_id` (int)
 - **Returns**: `int`
@@ -337,7 +343,7 @@ servo.LockEprom(1)
 ---
 
 ### `UnLockEprom(sts_id)`
-Unlock the EEPROM. Return `None` in case of error.
+Unlock the EEPROM. Return `0` in case of success.
 
 - **Parameters**: `sts_id` (int)
 - **Returns**: `int`
@@ -349,7 +355,7 @@ servo.UnLockEprom(1)
 ---
 
 ### `ChangeId(sts_id, new_id)`
-Change the servo ID. Return `None` in case of error.
+Change the servo ID. Return `None` when sucedeed otherwise the error message 
 
 - **Parameters**:
   - `sts_id` (int)
@@ -358,6 +364,19 @@ Change the servo ID. Return `None` in case of error.
 - **Example**:
 ```python
 servo.ChangeId(1, 2)
+```
+
+---
+### `ChangeBaudrate(sts_id, new_baudrate)`
+Change the servo baudrate. Return `None` when sucedeed otherwise the error message 
+
+- **Parameters**:
+  - `sts_id` (int)
+  - `new_baudrate` (int)
+- **Returns**: `None` or `str`
+- **Example**:
+```python
+servo.ChangeBaudrate(1, 4) # 115200
 ```
 
 ---
