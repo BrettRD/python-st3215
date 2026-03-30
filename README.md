@@ -61,7 +61,7 @@ servo.ListServos()
 Get the motor load (duty cycle) as signed integer between 1023 to -1024 . Return `None` in case of error.
 
 - **Parameters**: `sts_id` (int)
-- **Returns**: `float` or `None`
+- **Returns**: `int` or `None`
 - **Example**:
 ```python
 servo.ReadLoad(1)
